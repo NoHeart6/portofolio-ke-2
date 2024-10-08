@@ -18,12 +18,19 @@
             backdrop-filter: blur(10px);
         }
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #00ffff;
-            box-shadow: 0 0 20px #00ffff;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 15px #00ffff;
+        }
+        @media (min-width: 768px) {
+            .profile-img {
+                width: 200px;
+                height: 200px;
+                border-width: 5px;
+            }
         }
         .card {
             background-color: rgba(51, 51, 51, 0.8);
@@ -77,8 +84,14 @@
         .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 300px;
-            height: 300px;
+            width: 280px;
+            height: 320px;
+        }
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 300px;
+                height: 350px;
+            }
         }
         .swiper-pagination {
             bottom: 10px !important;
@@ -93,9 +106,9 @@
         }
         @keyframes fly {
             0% { transform: translate(0, 0) rotate(0deg) scale(0.7); }
-            25% { transform: translate(100px, -50px) rotate(45deg) scale(1); }
-            50% { transform: translate(200px, 0) rotate(0deg) scale(0.7); }
-            75% { transform: translate(100px, 50px) rotate(-45deg) scale(1); }
+            25% { transform: translate(50px, -25px) rotate(45deg) scale(1); }
+            50% { transform: translate(100px, 0) rotate(0deg) scale(0.7); }
+            75% { transform: translate(50px, 25px) rotate(-45deg) scale(1); }
             100% { transform: translate(0, 0) rotate(0deg) scale(0.7); }
         }
         #tetris-container {
@@ -103,12 +116,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
         #tetris {
             border: 2px solid #00ffff;
             box-shadow: 0 0 10px #00ffff;
+            max-width: 100%;
+            height: auto;
         }
         #tetris-controls {
             margin-top: 20px;
@@ -132,14 +147,24 @@
             box-shadow: 0 0 10px #00ffff;
         }
         #clock {
-            font-size: 8rem;
+            font-size: 4rem;
             font-weight: bold;
             text-align: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
+            margin-top: 30px;
+            margin-bottom: 30px;
             color: #00ffff;
             text-shadow: 0 0 20px #00ffff;
             animation: pulse 2s infinite;
+        }
+        @media (min-width: 768px) {
+            #clock {
+                font-size: 6rem;
+            }
+        }
+        @media (min-width: 992px) {
+            #clock {
+                font-size: 8rem;
+            }
         }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -263,307 +288,313 @@
                 <button class="tetris-button" id="left">←</button>
                 <button class="tetris-button" id="rotate">↻</button>
                 <button class="tetris-button" id="right">→</button>
-                <button class="tetris-button" id="down">↓</button>
+                <button class="tetris-button" id="down">↓</button>             </div>
             </div>
         </div>
-    </div>
-
-    <div class="container mt-5">
-        <div id="clock"></div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script>
-                var swiper = new Swiper('.swiper-container', {
-            effect: 'coverflow',
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            coverflowEffect: {
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-            },
-        });
-
-        // Efek warna merah acak
-        setInterval(() => {
-            const elements = document.querySelectorAll('.text-light-gray');
-            elements.forEach(el => {
-                if (Math.random() < 0.1) {  // 10% chance to change color
-                    el.style.color = '#ff4444';
-                    setTimeout(() => {
-                        el.style.color = '#cccccc';
-                    }, 500);
-                }
+    
+        <div class="container mt-5">
+            <div id="clock"></div>
+        </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+        <script>
+            // Swiper initialization
+            var swiper = new Swiper('.swiper-container', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
             });
-        }, 1000);
-
-        // Tetris Game
-        const canvas = document.getElementById('tetris');
-        const context = canvas.getContext('2d');
-        context.scale(20, 20);
-
-        function arenaSweep() {
-            let rowCount = 1;
-            outer: for (let y = arena.length - 1; y > 0; --y) {
-                for (let x = 0; x < arena[y].length; ++x) {
-                    if (arena[y][x] === 0) {
-                        continue outer;
+    
+            // Tetris Game
+            const canvas = document.getElementById('tetris');
+            const context = canvas.getContext('2d');
+            const scale = 20;
+            const rows = 20;
+            const cols = 12;
+    
+            canvas.width = cols * scale;
+            canvas.height = rows * scale;
+            context.scale(scale, scale);
+    
+            function arenaSweep() {
+                let rowCount = 1;
+                outer: for (let y = arena.length - 1; y > 0; --y) {
+                    for (let x = 0; x < arena[y].length; ++x) {
+                        if (arena[y][x] === 0) {
+                            continue outer;
+                        }
                     }
-                }
-                const row = arena.splice(y, 1)[0].fill(0);
-                arena.unshift(row);
-                ++y;
-                player.score += rowCount * 10;
-                rowCount *= 2;
-            }
-        }
-
-        function collide(arena, player) {
-            const [m, o] = [player.matrix, player.pos];
-            for (let y = 0; y < m.length; ++y) {
-                for (let x = 0; x < m[y].length; ++x) {
-                    if (m[y][x] !== 0 &&
-                        (arena[y + o.y] &&
-                        arena[y + o.y][x + o.x]) !== 0) {
-                        return true;
-                    }
+                    const row = arena.splice(y, 1)[0].fill(0);
+                    arena.unshift(row);
+                    ++y;
+                    player.score += rowCount * 10;
+                    rowCount *= 2;
                 }
             }
-            return false;
-        }
-
-        function createMatrix(w, h) {
-            const matrix = [];
-            while (h--) {
-                matrix.push(new Array(w).fill(0));
-            }
-            return matrix;
-        }
-
-        function createPiece(type) {
-            if (type === 'T') {
-                return [
-                    [0, 0, 0],
-                    [1, 1, 1],
-                    [0, 1, 0],
-                ];
-            } else if (type === 'O') {
-                return [
-                    [2, 2],
-                    [2, 2],
-                ];
-            } else if (type === 'L') {
-                return [
-                    [0, 3, 0],
-                    [0, 3, 0],
-                    [0, 3, 3],
-                ];
-            } else if (type === 'J') {
-                return [
-                    [0, 4, 0],
-                    [0, 4, 0],
-                    [4, 4, 0],
-                ];
-            } else if (type === 'I') {
-                return [
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                ];
-            } else if (type === 'S') {
-                return [
-                    [0, 6, 6],
-                    [6, 6, 0],
-                    [0, 0, 0],
-                ];
-            } else if (type === 'Z') {
-                return [
-                    [7, 7, 0],
-                    [0, 7, 7],
-                    [0, 0, 0],
-                ];
-            }
-        }
-
-        function draw() {
-            context.fillStyle = '#000';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            drawMatrix(arena, {x: 0, y: 0});
-            drawMatrix(player.matrix, player.pos);
-        }
-
-        function drawMatrix(matrix, offset) {
-            matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        context.fillStyle = colors[value];
-                        context.fillRect(x + offset.x, y + offset.y, 1, 1);
+    
+            function collide(arena, player) {
+                const [m, o] = [player.matrix, player.pos];
+                for (let y = 0; y < m.length; ++y) {
+                    for (let x = 0; x < m[y].length; ++x) {
+                        if (m[y][x] !== 0 &&
+                            (arena[y + o.y] &&
+                            arena[y + o.y][x + o.x]) !== 0) {
+                            return true;
+                        }
                     }
-                });
-            });
-        }
-
-        function merge(arena, player) {
-            player.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        arena[y + player.pos.y][x + player.pos.x] = value;
-                    }
-                });
-            });
-        }
-
-        function playerDrop() {
-            player.pos.y++;
-            if (collide(arena, player)) {
-                player.pos.y--;
-                merge(arena, player);
-                playerReset();
-                arenaSweep();
-                updateScore();
-            }
-            dropCounter = 0;
-        }
-
-        function playerMove(dir) {
-            player.pos.x += dir;
-            if (collide(arena, player)) {
-                player.pos.x -= dir;
-            }
-        }
-
-        function playerReset() {
-            const pieces = 'ILJOTSZ';
-            player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
-            player.pos.y = 0;
-            player.pos.x = (arena[0].length / 2 | 0) -
-                           (player.matrix[0].length / 2 | 0);
-            if (collide(arena, player)) {
-                arena.forEach(row => row.fill(0));
-                player.score = 0;
-                updateScore();
-            }
-        }
-
-        function playerRotate(dir) {
-            const pos = player.pos.x;
-            let offset = 1;
-            rotate(player.matrix, dir);
-            while (collide(arena, player)) {
-                player.pos.x += offset;
-                offset = -(offset + (offset > 0 ? 1 : -1));
-                if (offset > player.matrix[0].length) {
-                    rotate(player.matrix, -dir);
-                    player.pos.x = pos;
-                    return;
                 }
+                return false;
             }
-        }
-
-        function rotate(matrix, dir) {
-            for (let y = 0; y < matrix.length; ++y) {
-                for (let x = 0; x < y; ++x) {
-                    [
-                        matrix[x][y],
-                        matrix[y][x],
-                    ] = [
-                        matrix[y][x],
-                        matrix[x][y],
+    
+            function createMatrix(w, h) {
+                const matrix = [];
+                while (h--) {
+                    matrix.push(new Array(w).fill(0));
+                }
+                return matrix;
+            }
+    
+            function createPiece(type) {
+                if (type === 'T') {
+                    return [
+                        [0, 0, 0],
+                        [1, 1, 1],
+                        [0, 1, 0],
+                    ];
+                } else if (type === 'O') {
+                    return [
+                        [2, 2],
+                        [2, 2],
+                    ];
+                } else if (type === 'L') {
+                    return [
+                        [0, 3, 0],
+                        [0, 3, 0],
+                        [0, 3, 3],
+                    ];
+                } else if (type === 'J') {
+                    return [
+                        [0, 4, 0],
+                        [0, 4, 0],
+                        [4, 4, 0],
+                    ];
+                } else if (type === 'I') {
+                    return [
+                        [0, 5, 0, 0],
+                        [0, 5, 0, 0],
+                        [0, 5, 0, 0],
+                        [0, 5, 0, 0],
+                    ];
+                } else if (type === 'S') {
+                    return [
+                        [0, 6, 6],
+                        [6, 6, 0],
+                        [0, 0, 0],
+                    ];
+                } else if (type === 'Z') {
+                    return [
+                        [7, 7, 0],
+                        [0, 7, 7],
+                        [0, 0, 0],
                     ];
                 }
             }
-
-            if (dir > 0) {
-                matrix.forEach(row => row.reverse());
-            } else {
-                matrix.reverse();
+    
+            function draw() {
+                context.fillStyle = '#000';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                drawMatrix(arena, {x: 0, y: 0});
+                drawMatrix(player.matrix, player.pos);
             }
-        }
-
-        let dropCounter = 0;
-        let dropInterval = 1000;
-
-        let lastTime = 0;
-        function update(time = 0) {
-            const deltaTime = time - lastTime;
-            lastTime = time;
-
-            dropCounter += deltaTime;
-            if (dropCounter > dropInterval) {
-                playerDrop();
+    
+            function drawMatrix(matrix, offset) {
+                matrix.forEach((row, y) => {
+                    row.forEach((value, x) => {
+                        if (value !== 0) {
+                            context.fillStyle = colors[value];
+                            context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                        }
+                    });
+                });
             }
-
-            draw();
-            requestAnimationFrame(update);
-        }
-
-        function updateScore() {
-            // Removed score display as it's not in the HTML
-        }
-
-        const colors = [
-            null,
-            '#FF0D72', // Merah muda
-            '#0DC2FF', // Biru muda
-            '#0DFF72', // Hijau muda
-            '#F538FF', // Ungu
-            '#FF8E0D', // Oranye
-            '#FFE138', // Kuning
-            '#3877FF', // Biru
-        ];
-
-        const arena = createMatrix(12, 20);
-
-        const player = {
-            pos: {x: 0, y: 0},
-            matrix: null,
-            score: 0,
-        };
-
-        document.addEventListener('keydown', event => {
-            if (event.keyCode === 37) {
-                playerMove(-1);
-            } else if (event.keyCode === 39) {
-                playerMove(1);
-            } else if (event.keyCode === 40) {
-                playerDrop();
-            } else if (event.keyCode === 81) {
-                playerRotate(-1);
-            } else if (event.keyCode === 87) {
-                playerRotate(1);
+    
+            function merge(arena, player) {
+                player.matrix.forEach((row, y) => {
+                    row.forEach((value, x) => {
+                        if (value !== 0) {
+                            arena[y + player.pos.y][x + player.pos.x] = value;
+                        }
+                    });
+                });
             }
-        });
-
-        // Menambahkan event listener untuk tombol kontrol
-        document.getElementById('left').addEventListener('click', () => playerMove(-1));
-        document.getElementById('right').addEventListener('click', () => playerMove(1));
-        document.getElementById('rotate').addEventListener('click', () => playerRotate(1));
-        document.getElementById('down').addEventListener('click', playerDrop);
-
-        playerReset();
-        update();
-
-        // Animated Clock
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-        }
-
-        setInterval(updateClock, 1000);
-        updateClock(); // Initial call to display time immediately
-    </script>
-</body>
-</html>
+    
+            function playerDrop() {
+                player.pos.y++;
+                if (collide(arena, player)) {
+                    player.pos.y--;
+                    merge(arena, player);
+                    playerReset();
+                    arenaSweep();
+                    updateScore();
+                }
+                dropCounter = 0;
+            }
+    
+            function playerMove(dir) {
+                player.pos.x += dir;
+                if (collide(arena, player)) {
+                    player.pos.x -= dir;
+                }
+            }
+    
+            function playerReset() {
+                const pieces = 'ILJOTSZ';
+                player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+                player.pos.y = 0;
+                player.pos.x = (arena[0].length / 2 | 0) -
+                               (player.matrix[0].length / 2 | 0);
+                if (collide(arena, player)) {
+                    arena.forEach(row => row.fill(0));
+                    player.score = 0;
+                    updateScore();
+                }
+            }
+    
+            function playerRotate(dir) {
+                const pos = player.pos.x;
+                let offset = 1;
+                rotate(player.matrix, dir);
+                while (collide(arena, player)) {
+                    player.pos.x += offset;
+                    offset = -(offset + (offset > 0 ? 1 : -1));
+                    if (offset > player.matrix[0].length) {
+                        rotate(player.matrix, -dir);
+                        player.pos.x = pos;
+                        return;
+                    }
+                }
+            }
+    
+            function rotate(matrix, dir) {
+                for (let y = 0; y < matrix.length; ++y) {
+                    for (let x = 0; x < y; ++x) {
+                        [
+                            matrix[x][y],
+                            matrix[y][x],
+                        ] = [
+                            matrix[y][x],
+                            matrix[x][y],
+                        ];
+                    }
+                }
+    
+                if (dir > 0) {
+                    matrix.forEach(row => row.reverse());
+                } else {
+                    matrix.reverse();
+                }
+            }
+    
+            let dropCounter = 0;
+            let dropInterval = 1000;
+    
+            let lastTime = 0;
+            function update(time = 0) {
+                const deltaTime = time - lastTime;
+                lastTime = time;
+    
+                dropCounter += deltaTime;
+                if (dropCounter > dropInterval) {
+                    playerDrop();
+                }
+    
+                draw();
+                requestAnimationFrame(update);
+            }
+    
+            function updateScore() {
+                // Removed score display as it's not in the HTML
+            }
+    
+            const colors = [
+                null,
+                '#FF0D72', // Merah muda
+                '#0DC2FF', // Biru muda
+                '#0DFF72', // Hijau muda
+                '#F538FF', // Ungu
+                '#FF8E0D', // Oranye
+                '#FFE138', // Kuning
+                '#3877FF', // Biru
+            ];
+    
+            const arena = createMatrix(12, 20);
+    
+            const player = {
+                pos: {x: 0, y: 0},
+                matrix: null,
+                score: 0,
+            };
+    
+            // Responsive canvas resizing
+            function resizeCanvas() {
+                const container = document.getElementById('tetris-container');
+                const containerWidth = container.offsetWidth;
+                const scaleFactor = containerWidth / (cols * scale);
+                
+                canvas.style.width = `${containerWidth}px`;
+                canvas.style.height = `${rows * scale * scaleFactor}px`;
+            }
+    
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+    
+            // Event listeners for Tetris controls
+            document.addEventListener('keydown', event => {
+                if (event.keyCode === 37) {
+                    playerMove(-1);
+                } else if (event.keyCode === 39) {
+                    playerMove(1);
+                } else if (event.keyCode === 40) {
+                    playerDrop();
+                } else if (event.keyCode === 81) {
+                    playerRotate(-1);
+                } else if (event.keyCode === 87) {
+                    playerRotate(1);
+                }
+            });
+    
+            document.getElementById('left').addEventListener('click', () => playerMove(-1));
+            document.getElementById('right').addEventListener('click', () => playerMove(1));
+            document.getElementById('rotate').addEventListener('click', () => playerRotate(1));
+            document.getElementById('down').addEventListener('click', playerDrop);
+    
+            playerReset();
+            update();
+    
+            // Animated Clock
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            }
+    
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
+    </body>
+    </html>
