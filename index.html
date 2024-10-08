@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Wisnu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+        }
+        .card {
+            background-color: rgba(51, 51, 51, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        .btn-neon {
+            background-color: #00ffff;
+            color: #1a1a1a;
+            border: none;
+            box-shadow: 0 0 10px #00ffff;
+            transition: all 0.3s ease;
+        }
+        .btn-neon:hover {
+            background-color: #1a1a1a;
+            color: #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+        }
+        .text-neon {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .text-light-gray {
+            color: #cccccc;
+            transition: color 0.5s ease;
+        }
+        .text-light-gray:hover {
+            color: #ff4444;
+        }
+        .project-card {
+            background-color: #333333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .swiper-container {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 300px;
+        }
+        .butterfly {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300ffff"><path d="M12.75 14.33C15.38 14.33 16.9 13.4 17.65 12.05C18.42 10.67 18.67 8.84 18.67 7.21C18.67 4.86 17.47 3 16.04 3C14.61 3 13.4 4.86 13.4 7.21C13.4 8.84 13.65 10.67 14.42 12.05C14.91 13 15.78 13.67 16.94 13.96C16.73 14.05 16.5 14.12 16.24 14.17C15.57 14.29 14.75 14.33 13.81 14.33H12.75M11.25 14.33C8.62 14.33 7.1 13.4 6.35 12.05C5.58 10.67 5.33 8.84 5.33 7.21C5.33 4.86 6.53 3 7.96 3C9.39 3 10.6 4.86 10.6 7.21C10.6 8.84 10.35 10.67 9.58 12.05C9.09 13 8.22 13.67 7.06 13.96C7.27 14.05 7.5 14.12 7.76 14.17C8.43 14.29 9.25 14.33 10.19 14.33H11.25M12 15C9.37 15 5.09 15.86 3.25 18.1C2.25 19.28 2 20.73 2 21.75V22H22V21.75C22 20.73 21.75 19.28 20.75 18.1C18.91 15.86 14.62 15 12 15Z" /></svg>') no-repeat center center;
+            background-size: contain;
+            opacity: 0.7;
+        }
+        @keyframes fly {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(0.7);
+            }
+            25% {
+                transform: translate(100px, -50px) rotate(45deg) scale(1);
+            }
+            50% {
+                transform: translate(200px, 0) rotate(0deg) scale(0.7);
+            }
+            75% {
+                transform: translate(100px, 50px) rotate(-45deg) scale(1);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(0.7);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-neon" href="#">Portofolio Wisnu</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-neon" href="form.html">Isi Formulir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="butterfly" style="top: 10%; left: 10%; animation: fly 15s infinite;"></div>
+                    <div class="butterfly" style="top: 70%; right: 10%; animation: fly 20s infinite reverse;"></div>
+                    <div class="card-body text-center">
+                        <img src="img/g5.jpeg" alt="Foto Profil" class="profile-img mb-4">
+                        <h2 class="card-title mb-3 text-neon">Wisnu</h2>
+                        <p class="card-text text-light-gray">Web Developer | Designer</p>
+                        <p class="card-text mt-4 text-light-gray">Saya adalah seorang pengembang web yang berpengalaman dalam menciptakan solusi digital yang inovatif.</p>
+                        <div class="mt-4">
+                            <a href="#projects" class="btn btn-neon me-2">Lihat Proyek</a>
+                            <a href="form.html" class="btn btn-outline-light">Hubungi Saya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5" id="projects">
+        <h2 class="text-center text-neon mb-4">Proyek Saya</h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g1.jpeg" alt="Portofolio">
+                        <div class="p-3">
+                            <h5 class="text-neon">Portofolio</h5>
+                            <p class="text-light-gray">Website portofolio personal</p>
+                            <a href="https://portofolio-psi-gold.vercel.app/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g2.jpeg" alt="Web Tugas STI">
+                        <div class="p-3">
+                            <h5 class="text-neon">Web Tugas STI</h5>
+                            <p class="text-light-gray">Proyek web untuk tugas STI</p>
+                            <a href="https://noheart6.github.io/web-tugas-sti/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g3.jpeg" alt="UAS">
+                        <div class="p-3">
+                            <h5 class="text-neon">UAS</h5>
+                            <p class="text-light-gray">Proyek untuk Ujian Akhir Semester</p>
+                            <a href="https://uas2.vercel.app/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g4.jpeg" alt="Kalkulus">
+                        <div class="p-3">
+                            <h5 class="text-neon">Kalkulus</h5>
+                            <p class="text-light-gray">Website pembelajaran Kalkulus</p>
+                            <a href="https://kalkulus-teal.vercel.app/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g7.jpeg" alt="HMPSIF">
+                        <div class="p-3">
+                            <h5 class="text-neon">HMPSIF</h5>
+                            <p class="text-light-gray">Website Himpunan Mahasiswa</p>
+                            <a href="https://hmpsif.vercel.app/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="project-card">
+                        <img src="img/g8.jpeg" alt="UAS Aljabar">
+                        <div class="p-3">
+                            <h5 class="text-neon">UAS Aljabar</h5>
+                            <p class="text-light-gray">Proyek UAS mata kuliah Aljabar</p>
+                            <a href="https://uas-aljabarwisnu.vercel.app/" target="_blank" class="btn btn-neon btn-sm">Lihat Proyek</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+
+        // Efek warna merah acak
+        setInterval(() => {
+            const elements = document.querySelectorAll('.text-light-gray');
+            elements.forEach(el => {
+                if (Math.random() < 0.1) {  // 10% chance to change color
+                    el.style.color = '#ff4444';
+                    setTimeout(() => {
+                        el.style.color = '#cccccc';
+                    }, 500);
+                }
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
